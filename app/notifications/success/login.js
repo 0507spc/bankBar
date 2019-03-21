@@ -7,7 +7,7 @@ module.exports = (options) => {
   return {
     title: 'Bankbar',
     subtitle: `Congratulations ${name}`,
-    body: 'You can successfully authenticated with Monzo',
+    body: 'You have successfully authenticated with Monzo',
     icon: `${imagesDir}/app-icon.png`
   };
 };
