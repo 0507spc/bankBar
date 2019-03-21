@@ -40,7 +40,7 @@ module.exports = (store, tray) => {
 
   try {
     if (store.has('clientId') && store.has('clientSecret')) {
-      store.set('redirectUri', 'https://bankbar-auth.herokuapp.com/');
+      store.set('redirectUri', 'https://bankbar-auth-proxy.netlify.com/.netlify/functions/bankbar-proxy');
       getAuthCode(store);
 
       app.on('open-url', (event, url) => {
