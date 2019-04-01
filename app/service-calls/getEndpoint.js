@@ -10,6 +10,8 @@ module.exports = (endpoint, accountId) => {
       ).toISOString()}&expand[]=merchant`;
     case 'pots':
       return '/pots';
+    case 'auth':
+      return '/oauth2/token';
     default:
       throw new Error('Incorrect Endpoint');
   }

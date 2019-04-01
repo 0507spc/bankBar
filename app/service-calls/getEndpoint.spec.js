@@ -1,4 +1,4 @@
-const getUrl = require('./getUrl');
+const getEndpoint = require('./getEndpoint');
 
 describe('getUrl', () => {
   test('should return the correct url', () => {
@@ -12,12 +12,14 @@ describe('getUrl', () => {
     today.setHours(0, 0, 0, 0);
     const todayString = today.toISOString();
 
-    expect(getUrl(account, accountId)).toBe('/accounts?account_type=uk_retail');
-    expect(getUrl(balance, accountId)).toBe('/balance?account_id=abc123');
-    expect(getUrl(transactions, accountId)).toBe(
+    expect(getEndpoint(account, accountId)).toBe(
+      '/accounts?account_type=uk_retail'
+    );
+    expect(getEndpoint(balance, accountId)).toBe('/balance?account_id=abc123');
+    expect(getEndpoint(transactions, accountId)).toBe(
       `/transactions?account_id=abc123&since=${todayString}&expand[]=merchant`
     );
-    expect(getUrl(pots, accountId)).toBe('/pots');
+    expect(getEndpoint(pots, accountId)).toBe('/pots');
   });
 
   test('should throw if something incorrect is passed in', () => {
@@ -25,7 +27,7 @@ describe('getUrl', () => {
     const incorrectValue = 'incorrectValue';
     const undefinedValue = undefined;
 
-    expect(() => getUrl(incorrectValue, accountId)).toThrow();
-    expect(() => getUrl(undefinedValue, accountId)).toThrow();
+    expect(() => getEndpoint(incorrectValue, accountId)).toThrow();
+    expect(() => getEndpoint(undefinedValue, accountId)).toThrow();
   });
 });

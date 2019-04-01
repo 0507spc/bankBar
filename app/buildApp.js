@@ -4,11 +4,9 @@ const aboutMenu = require('../app/menus/about');
 const contactMenu = require('../app/menus/contact');
 const convertToPositive = require('./utils/convertToPositive/convertToPositive');
 const formatCurrency = require('./utils/formatCurrency/formatCurrency');
-const get = require('./serviceCalls/get');
+const fetcher = require('./service-calls/fetcher');
 const optionsMenu = require('../app/menus/options');
-const refreshToken = require('./serviceCalls/POST/refreshToken');
 const showErrorNotification = require('./notifications/showErrorNotification');
-const potTransfer = require('./serviceCalls/PUT/potTransfer');
 
 const buildApp = async (store, tray) => {
   debug('Building App');
@@ -18,11 +16,13 @@ const buildApp = async (store, tray) => {
   }
 
   try {
-    await refreshToken(store);
+    const tokenResponse = await fetcher(store).auth.refreshToken();
+    store.set('accessToken', tokenResponse.access_token);
+    store.set('refreshToken', tokenResponse.refresh_token);
 
-    const balancePayload = await get(store, 'balance');
-    const potsList = await get(store, 'pots');
-    const transactionsList = await get(store, 'transactions');
+    const balancePayload = await fetcher(store).balance.get();
+    const potsList = await fetcher(store).pots.get();
+    const transactionsList = await fetcher(store).transactions.get();
 
     const { balance, currency, spend_today: spent } = balancePayload;
     const { pots } = potsList;
@@ -52,11 +52,10 @@ const buildApp = async (store, tray) => {
           } ${name}:  £${formatCurrency(p.balance, p.currency)}`,
           id: p.id,
           click(pot) {
-            dialog.showMessageBox(null, potTransferOptions, (valueId) => {
+            dialog.showMessageBox(null, potTransferOptions, async (valueId) => {
               if (valueId > 0)
-                potTransfer(store, pot, valueId, balance, () =>
-                  buildApp(store, tray)
-                );
+                await fetcher(store).pots.transfer(pot, valueId, balance);
+              buildApp(store, tray);
             });
           }
         };

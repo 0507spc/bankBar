@@ -1,10 +1,9 @@
 const { app } = require('electron');
 const debug = require('debug')('login');
 const buildApp = require('../buildApp');
-const get = require('../serviceCalls/get');
+const fetcher = require('../service-calls/fetcher');
 const getAuthCode = require('./getAuthCode');
 const oAuthWindow = require('../windows/OAuth/OAuthWindow');
-const setAccessToken = require('../serviceCalls/POST/accessToken');
 const showNotification = require('../notifications/showSuccessNotification');
 const showErrorNotification = require('../notifications/showErrorNotification');
 
@@ -12,8 +11,11 @@ const continueLogin = async (store, tray) => {
   debug('Continuing login');
 
   try {
-    await setAccessToken(store);
-    const accountId = await get(store, 'account');
+    const tokenResponse = await fetcher(store).auth.accessToken();
+    store.set('accessToken', tokenResponse.access_token);
+    store.set('refreshToken', tokenResponse.refresh_token);
+
+    const accountId = await fetcher(store).account.get();
 
     store.set(
       'firstName',
@@ -40,7 +42,10 @@ module.exports = (store, tray) => {
 
   try {
     if (store.has('clientId') && store.has('clientSecret')) {
-      store.set('redirectUri', 'https://bankbar-auth-proxy.netlify.com/.netlify/functions/bankbar-proxy');
+      store.set(
+        'redirectUri',
+        'https://bankbar-auth-proxy.netlify.com/.netlify/functions/bankbar-proxy/'
+      );
       getAuthCode(store);
 
       app.on('open-url', (event, url) => {
