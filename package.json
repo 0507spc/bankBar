@@ -1,7 +1,7 @@
 {
   "name": "bankbar",
   "version": "1.1.0",
-  "description": "An Electron based menubar application",
+  "description": "Monzo Bank on your desktop",
   "license": "MIT",
   "author": "John Easton",
   "repository": "https://github.com/johneas10/bankBar",
@@ -35,8 +35,8 @@
   "scripts": {
     "dist": "electron-builder",
     "start": "electron .",
-    "start:debug": "DEBUG=* electron .",
-    "start:watch": "electromon .",
+    "debug": "DEBUG=* electron .",
+    "watch": "electromon .",
     "test": "jest",
     "test:watch": "jest --watch",
     "release": "standard-version",
@@ -46,7 +46,7 @@
     "lint:fix": "eslint . --fix"
   },
   "build": {
-    "appId": "io.johneas.bankbar",
+    "appId": "dev.easton.bankbar",
     "mac": {
       "icon": "app/images/icon-main.png"
     },
