@@ -69,7 +69,7 @@ _The code can be found [here](https://github.com/johneas10/bankBar-serverless-pr
 2. Create your feature branch `git checkout -b feature/more_monzo`
 3. Commit your changes with [commitizen](https://www.npmjs.com/package/commitizen) `npm run commit`
 4. Push to the branch `git push origin feature/more_monzo`
-5. Create a new Pull Request against the Develop branch.
+5. Create a new Pull Request against the Master branch.
 
 ## License
 Distributed under the MIT license. See `LICENSE` for more information.
