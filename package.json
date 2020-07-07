@@ -7,7 +7,7 @@
   "repository": "https://github.com/johneas10/bankBar",
   "devDependencies": {
     "electromon": "1.0.10",
-    "electron": "5.0.0",
+    "electron": "7.2.4",
     "electron-builder": "20.40.2",
     "eslint": "5.16.0",
     "eslint-config-prettier": "4.1.0",
