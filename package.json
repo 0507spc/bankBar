@@ -21,7 +21,7 @@
     "husky": "2.0.0",
     "jest": "24.7.1",
     "prettier": "1.17.0",
-    "standard-version": "5.0.2"
+    "standard-version": "8.0.1"
   },
   "dependencies": {
     "debug": "4.1.1",
