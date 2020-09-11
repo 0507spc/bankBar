@@ -27,7 +27,7 @@
     "debug": "4.1.1",
     "dotenv": "7.0.0",
     "electron-store": "3.2.0",
-    "node-fetch": "2.3.0",
+    "node-fetch": "2.6.1",
     "randomstring": "1.1.5"
   },
   "main": "main.js",
